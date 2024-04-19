@@ -1,0 +1,609 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+
+public class FileMerge {
+
+public static void main(String[] args) {
+
+String fileName1 = args[0];
+String fileName2 = args[1];
+
+try {
+File file1 = new File(fileName1);
+File file2 = new File(fileName2);
+File file3 = new File(fileName1 + fileName2 + "_merge.txt");
+
+BufferedReader br1 = new BufferedReader(new FileReader(file1));
+BufferedReader br2 = new BufferedReader(new FileReader(file2));
+BufferedWriter bw = new BufferedWriter(new FileWriter(file3));
+
+String line1 = br1.readLine();
+String line2 = br2.readLine();
+
+while (line1 != null && line2 != null) {
+bw.write(line1 + "\n");
+bw.write(line2 + "\n");
+line1 = br1.readLine();
+line2 = br2.readLine();
+}
+
+while (line1 != null) {
+bw.write(line1 + "\n");
+line1 = br1.readLine();
+}
+
+while (line2 != null) {
+bw.write(line2 + "\n");
+line2 = br2.readLine();
+}
+
+br1.close();
+br2.close();
+bw.close();
+
+} catch (Exception e) {
+e.printStackTrace();
+}
+}
+}
+
+08:02
+//Write a Java program to multiply two matrices
+import java.util.*;
+public class MatrixMulti {
+public static void main(String[] args) {
+Scanner s = new Scanner(System.in);
+int matrix1[][],matrix2[][];
+int r,i,j,k;
+try{
+System.out.println("Enter the size of the Matrics : ");
+r=s.nextInt();
+matrix1=matrix2= new int[r][r];
+System.out.println("Enter the First Matrix : ");
+for(i = 0;i for(j=0;j {
+matrix1[i][j]=s.nextInt();
+}
+}
+System.out.println("Enter the Second Matrix : ");
+for(i = 0;i for(j=0;j {
+matrix2[i][j]=s.nextInt();
+}
+}
+System.out.println("Matrix : ");
+for(i = 0;i for(j=0;j {
+System.out.print(matrix1[i][j]+" ");
+}
+System.out.println("\n");
+}
+multiply(matrix1, matrix2, r);
+}
+catch(Exception e){
+
+}
+finally{
+s.close();
+}
+}
+public static void multiply(int[][] matrix1, int matrix2[][],int r){
+int i,j,k, product[][];
+product= new int[r][r];
+for(i = 0;i for(j=0;j {
+product[i][j]=0;
+for(k=0;k product[i][j]+=matrix1[i][k]*matrix2[k][j];
+}
+}
+}
+System.out.println("The product : ");
+for(i = 0;i for(j=0;j {
+System.out.print(product[i][j]+" ");
+}
+System.out.println("\n");
+}
+}
+}
+
+08:04
+//copy contents of one file to another
+import java.io.*;
+import java.util.*;
+class FCopy {
+public static void main(String args[]) {
+FileInputStream fin;
+FileOutputStream fout;
+Scanner s = new Scanner(System.in);
+String sfname,dfname;
+try {
+System.out.println("Enter the source file name");
+sfname = s.nextLine();
+System.out.println("Enter the destination file name");
+dfname = s.nextLine();
+fin = new FileInputStream(sfname);
+fout = new FileOutputStream(dfname);
+byte b[];
+b = new byte[5];
+int n = fin.read(b,0,5);
+while(n != -1) {
+fout.write(b,0,n);
+n = fin.read(b,0,5);
+}
+fin.close();
+fout.close();
+}
+catch(Exception e) {
+System.out.println("Error " + e);
+}
+}
+}
+
+08:06
+//use of throws
+import java.util.*;
+import java.io.*;
+class CArray {
+int a[],n;
+public void readArray() throws IOException,NumberFormatException,ArrayIndexOutOfBoundsException
+{
+Scanner s = new Scanner(System.in);
+System.out.println("Enter n");
+n = s.nextInt();
+a = new int[n];
+for(int i =0;i < n;i++) {
+System.out.println("Enter a[" + i + "]");
+a[i] = s.nextInt();
+}
+}
+public void dispArray() throws ArrayIndexOutOfBoundsException {
+int i;
+for(i = 0;i <= n;i++)
+{
+System.out.println(a[i]);
+}
+}
+}
+class MThrowsArray {
+public static void main(String args[]) {
+try{
+CArray obj = new CArray();
+obj.readArray();
+obj.dispArray();
+}
+catch(IOException e1) {
+System.out.println(e1);
+}
+catch(NumberFormatException e2) {
+System.out.println(e2);
+}
+catch(ArrayIndexOutOfBoundsException e3) {
+System.out.println(e3);
+}
+catch(Exception e4) {
+System.out.println(e4);
+}
+}
+}
+
+08:09
+import java.net.*;
+import java.io.*;
+import java.util.Date;
+class ucdemosave
+{
+public static void main(String args[]) throws Exception
+{
+int c;
+URL u=new URL("https://mrcet.com/downloads/digital_notes/IT/JAVA%20PROGRAMMING.pdf");
+URLConnection uc=u.openConnection();
+System.out.println("Date:"+new Date(uc.getDate()));
+System.out.println("Content-Type"+uc.getContentType());
+System.out.println("Expires:"+uc.getExpiration());
+System.out.println("Last-modified:"+new Date(uc.getLastModified()));
+int len=uc.getContentLength();
+System.out.println("content-Length:"+len);
+if(len>0)
+{
+FileOutputStream fout=new FileOutputStream("test.pdf");
+System.out.println("===content===");
+InputStream input=uc.getInputStream();
+int i=0;
+while(((c=input.read())!=-1)&& i {
+fout.write((char)c);
+i++;
+}
+input.close();
+fout.close();
+}
+else
+{
+System.out.println("NO content available");
+}
+
+}
+}
+
+08:11
+import java.io.*;
+import java.util.*;
+import java.sql.*;
+class DBI {
+
+public static void main(String args[]) {
+Connection con;
+Statement st;
+int no;
+String name;
+float sal;
+Scanner s = new Scanner(System.in);
+try {
+Class.forName("com.mysql.jdbc.Driver");
+con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbw?characterEncoding=utf8","root","");
+st = con.createStatement();
+System.out.println("Enter no name and salary");
+no = s.nextInt(); //10_
+s.nextLine();
+name = s.nextLine();
+sal = s.nextFloat();
+// String str = "insert into emp values(2,'ddd',40000)";
+String str = "insert into emp values(";
+str = str + no + ",'"+name+"',"+sal+")";
+// str = str + name + "',";
+// str = str + sal +")";
+System.out.println(str);
+st.executeUpdate(str);
+System.out.println("4");
+System.out.println("One Record is Inserted..");
+}
+catch(Exception e) {
+System.out.println("Error " + e);
+}
+}
+}
+
+08:11
+import java.io.*;
+import java.util.*;
+import java.sql.*;
+class DBS {
+public static void main(String args[]) {
+Connection con;
+Statement st;
+ResultSet rs;
+try {
+Class.forName("com.mysql.jdbc.Driver");
+con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbw?characterEncoding=utf8","root","");
+st = con.createStatement();
+String str = "select * from emp";
+rs = st.executeQuery(str);
+while(rs.next()) {
+System.out.println(rs.getString("no") + " " + rs.getString("name") + " " + rs.getString("salary"));
+}
+}
+catch(Exception e) {
+System.out.println("Error " + e);
+}
+}
+}
+
+09:00
+class PriorityThread extends Thread {
+
+private int n;
+
+PriorityThread(int n, int priority) {
+super();
+this.n = n;
+this.setPriority(priority);
+}
+
+public void run() {
+for (int i = 0; i < this.n; i++) {
+System.out.println("Iteration " + i + " of " + this.getPriority() + " priority thread");
+}
+}
+
+}
+
+class Main {
+
+public static void main(String args[]) throws Exception {
+
+PriorityThread p1 = new PriorityThread(10, Thread.MIN_PRIORITY);
+PriorityThread p2 = new PriorityThread(30, Thread.MAX_PRIORITY);
+
+p1.start();
+p2.start();
+}
+}
+
+19 April
+07:29
+import java.net.*; import java.io.*; class UDPS
+{
+public static void main(String args[])
+
+{
+DatagramSocket ds = null; DatagramPacket dp = null, reply; try
+{
+ds = new DatagramSocket(1234); byte[] buffer = new byte[1000];
+dp = new DatagramPacket(buffer,buffer.length); ds.receive(dp);
+System.out.println("From Clinet: " + (new String(dp.getData())).trim());
+System.out.println("Client PORT : "+ dp.getPort());
+reply = new DatagramPacket("From Server ok".getBytes(),"From Server ok".length(),dp.getAddress(),dp.getPort());
+ds.send(reply);
+}
+catch (SocketException e)
+{
+System.out.println("Socket: " + e.getMessage());
+}
+catch (IOException e)
+{
+
+
+}
+finally
+{
+
+
+}
+}
+}
+
+07:30
+import java.net.*; import java.io.*; class UDPC
+{
+public static void main(String args[])
+{
+DatagramSocket ds = null; InetAddress shost = null;
+DatagramPacket dp = null , reply = null; try
+{
+ds = new DatagramSocket(); byte [] m = "Bye".getBytes();
+shost = InetAddress.getByName("localhost"); dp =new DatagramPacket(m, 3, shost, 1234); ds.send(dp);
+byte[] buffer = new byte[1000];
+reply = new DatagramPacket(buffer, buffer.length); ds.receive(reply);
+System.out.println("Reply: " + (new String(reply.getData())).trim());
+}
+catch (SocketException e)
+{
+System.out.println("Socket: " + e.getMessage());
+}
+catch (IOException e)
+{
+
+
+}
+finally
+{
+if (ds != null) ds.close();
+
+}
+}
+}
+
+07:30
+import java.io.*; import java.net.*; import java.util.*;
+
+class ChatServer {
+public static void main(String[] args) { ServerSocket ss;
+Socket as; DataInputStream sin; DataOutputStream sout; Scanner s;
+try {
+ss = new ServerSocket(1234); as = ss.accept();
+sin = new DataInputStream(as.getInputStream());
+
+sout = new DataOutputStream(as.getOutputStream()); s = new Scanner(System.in); System.out.println("Enter text to send : ");
+String str = s.nextLine(); sout.writeUTF(str); while(!str.equals("quit")){
+str = sin.readUTF(); if(str.equals("quit")){
+ss.close();
+System.out.println("Client has closed the connection!"); break;
+}
+System.out.println("Client :"+str); System.out.println("Enter text to send : "); str = s.nextLine();
+sout.writeUTF(str);
+}
+} catch (Exception e) {}
+}
+}
+
+07:30
+import java.io.*; import java.net.*; import java.util.*;
+
+class ChatClient{
+public static void main(String[] args) { Socket cs;
+DataInputStream sin; DataOutputStream sout; Scanner s;
+try {
+cs = new Socket("localhost",1234);
+sin = new DataInputStream(cs.getInputStream()); sout = new DataOutputStream(cs.getOutputStream()); s = new Scanner(System.in);
+String str; do{
+str = sin.readUTF(); System.out.println("Server : "+str); if(str.equals("quit")){
+System.out.println("Server has closed the connection!"); break;
+}
+System.out.println("Enter text to send : "); str = s.nextLine();
+sout.writeUTF(str);
+}while(!str.equals("quit"));
+} catch (Exception e) {}
+}
+}
+
+07:31
+import javax.swing.*; import java.awt.*; import java.awt.event.*;
+public class TrafficLightSimulator extends JFrame implements ActionListener { private JRadioButton redButton;
+private JRadioButton yellowButton; private JRadioButton greenButton; public TrafficLightSimulator() {
+setTitle("Traffic Light Simulator"); setSize(200, 300); setDefaultCloseOperation(EXIT_ON_CLOSE); setLocationRelativeTo(null);
+redButton = new JRadioButton("Red"); yellowButton = new JRadioButton("Yellow"); greenButton = new JRadioButton("Green"); ButtonGroup group = new ButtonGroup(); group.add(redButton); group.add(yellowButton); group.add(greenButton); redButton.addActionListener(this); yellowButton.addActionListener(this); greenButton.addActionListener(this);
+JPanel panel = new JPanel(); panel.setLayout(new GridLayout(3, 1)); panel.add(redButton); panel.add(yellowButton); panel.add(greenButton);
+add(panel); setVisible(true);
+}
+public void actionPerformed(ActionEvent e) { String command = e.getActionCommand(); switch (command) {
+case "Red":
+showMessage("Red light is on."); break;
+case "Yellow":
+showMessage("Yellow light is on."); break;
+case "Green":
+showMessage("Green light is on.");
+
+break;
+}
+}
+private void showMessage(String message) { JOptionPane.showMessageDialog(this, message);
+}
+public static void main(String[] args) { new TrafficLightSimulator();
+}
+}
+
+07:32
+class Node { int data; Node prev; Node next;
+public Node(int data) { this.data = data; this.prev = null; this.next = null;
+}
+}
+class DoublyLinkedList { Node head;
+Node tail;
+public DoublyLinkedList() { this.head = null;
+this.tail = null;
+}
+public void insert(int data) {
+Node newNode = new Node(data); if (head == null) {
+head = newNode; tail = newNode;
+} else {
+tail.next = newNode; newNode.prev = tail; tail = newNode;
+}
+}
+public void delete(int data) { Node current = head; while (current != null) {
+if (current.data == data) { if (current.prev != null) {
+current.prev.next = current.next;
+} else {
+head = current.next;
+
+}
+if (current.next != null) { current.next.prev = current.prev;
+} else {
+tail = current.prev;
+}
+break;
+}
+current = current.next;
+}
+}
+public void display() { Node current = head; while (current != null) {
+System.out.print(current.data + " "); current = current.next;
+}
+System.out.println();
+}
+}
+public class DLL {
+public static void main(String[] args) { DoublyLinkedList list = new DoublyLinkedList(); list.insert(1);
+list.insert(2); list.insert(3); list.insert(4); list.insert(5);
+System.out.println("Contents of the list before deletion:"); list.display();
+int elementToDelete = 3; list.delete(elementToDelete);
+System.out.println("Contents of the list after deletion of " + elementToDelete + ":");
+list.display();
+}
+}
+
+07:33
+import java.util.Arrays;
+public class QuickSortNames {
+public static void main(String[] args) {
+String[] names = {"John", "Alice", "Bob", "Eva", "Charlie", "David"}; System.out.println("Original list of names: " + Arrays.toString(names)); quickSort(names, 0, names.length - 1);
+System.out.println("Sorted list of names: " + Arrays.toString(names));
+}
+public static void quickSort(String[] arr, int low, int high) { if (low < high) {
+int pi = partition(arr, low, high); quickSort(arr, low, pi - 1); quickSort(arr, pi + 1, high);
+}
+}
+public static int partition(String[] arr, int low, int high) { String pivot = arr[high];
+int i = low - 1;
+for (int j = low; j < high; j++) {
+if (arr[j].compareTo(pivot) < 0) { i++;
+String temp = arr[i]; arr[i] = arr[j];
+arr[j] = temp;
+}
+}
+String temp = arr[i + 1]; arr[i + 1] = arr[high]; arr[high] = temp;
+
+return i + 1;
+}
+}
+
+07:34
+import java.io.BufferedReader; import java.io.FileReader; import java.io.IOException; public class FileStats {
+public static void main(String[] args) { String filePath ="arya.txt";
+try {
+FileStatistics stats = getFileStatistics(filePath); System.out.println("Number of characters: " + stats.getCharacterCount()); System.out.println("Number of lines: " + stats.getLineCount()); System.out.println("Number of words: " + stats.getWordCount());
+} catch (IOException e) {
+System.out.println("An error occurred: " + e.getMessage());
+}
+}
+public static FileStatistics getFileStatistics(String filePath) throws IOException { int charCount = 0;
+int lineCount = 0; int wordCount = 0;
+try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) { String line;
+while ((line = reader.readLine()) != null) { lineCount++;
+charCount += line.length(); String[] words = line.split("\\s+"); wordCount += words.length;
+}
+}
+return new FileStatistics(charCount, lineCount, wordCount);
+}
+}
+class FileStatistics {
+private final int characterCount; private final int lineCount; private final int wordCount;
+public FileStatistics(int characterCount, int lineCount, int wordCount) { this.characterCount = characterCount;
+this.lineCount = lineCount; this.wordCount = wordCount;
+}
+public int getCharacterCount() { return characterCount;
+
+}
+public int getLineCount() { return lineCount;
+}
+public int getWordCount() { return wordCount;
+}
+}
+
+import java.util.Random;
+class RandomNumberGenerator extends Thread { private boolean running;
+public RandomNumberGenerator() { this.running = true;
+}
+public void stopGenerating() { this.running = false;
+}
+@Override
+public void run() {
+Random random = new Random(); while (running) {
+try {
+Thread.sleep(1000);
+int number = random.nextInt(100); System.out.println("Generated number: " + number); if (number % 2 == 0) { // Check if the number is even
+SquareThread squareThread = new SquareThread(number); squareThread.start(); // Start SquareThread
+}
+else {
+CubeThread cubeThread = new CubeThread(number); cubeThread.start();
+}
+} catch (InterruptedException e) { e.printStackTrace();
+}
+}
+}
+}sss
+class SquareThread extends Thread { private int number;
+public SquareThread(int number) { this.number = number;
+}
+@Override
+public void run() {
+System.out.println("Square of " + number + ": " + (number * number));
+}
+ 
+}
+class CubeThread extends Thread { private int number;
+public CubeThread(int number) { this.number = number;
+}
+@Override
+public void run() {
+System.out.println("Cube of " + number + ": " + (number * number * number));
+}
+}
+public class Main {
+public static void main(String[] args) {
+
+RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator(); randomNumberGenerator.start();
+try {
+Thread.sleep(10000);
+} catch (InterruptedException e) { e.printStackTrace();
+}
+randomNumberGenerator.stopGenerating();
+}
+}
